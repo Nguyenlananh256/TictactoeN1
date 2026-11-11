@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#25418f">
+  <title>Caro Arena — Five in a Row</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="game.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./index.html" aria-label="Caro home"><span class="brand-icon">✕<span>○</span></span> Caro Arena</a>
+  </header>
+  <main>
+    <div class="workspace">
+      <aside class="panel settings">
+        <div class="panel-heading"><span class="section-number">01</span><h2>Game settings</h2></div>
+        <form id="settings-form">
+          <label for="mode">Game mode</label>
+          <select id="mode"><option value="human">Two players</option><option value="human-ai">Human vs AI</option><option value="ai-ai">AI vs AI</option></select>
+          <div id="human-settings" hidden><label for="human-piece">Your mark</label><select id="human-piece"><option value="X">X · plays first</option><option value="O">O · plays second</option></select></div>
+          <div id="ai-settings" hidden>
+            <div id="x-agent-wrap"><label for="x-agent">Algorithm · X</label><select id="x-agent"><option value="minimax">MiniMax + Alpha-Beta</option><option value="mcts">MCTS + UCT</option><option value="random">Random</option></select></div>
+            <div id="o-agent-wrap"><label for="o-agent">Algorithm · O</label><select id="o-agent"><option value="mcts">MCTS + UCT</option><option value="minimax">MiniMax + Alpha-Beta</option><option value="random">Random</option></select></div>
+            <details open><summary>Algorithm parameters</summary><div class="parameter-grid">
+              <div><label for="depth">Search depth</label><input id="depth" type="number" min="2" max="10" value="2" required></div>
+              <div><label for="candidates">Candidate limit</label><input id="candidates" type="number" min="1" max="81" value="12" required></div>
+              <div><label for="exploration">Exploration c</label><select id="exploration"><option>0.5</option><option>1.0</option><option selected>1.4</option><option>2.0</option></select></div>
+              <div><label for="iterations">Iterations</label><select id="iterations"><option>100</option><option selected>300</option><option>500</option></select></div>
+            </div></details>
+          </div>
+          <p id="integration-note" class="integration-note" hidden>AI is not connected yet. Select Two players to try the game.</p>
+          <button type="submit" class="button primary">New game <span aria-hidden="true">↗</span></button>
+          <p class="settings-hint">Settings apply when you start a new game.</p>
+        </form>
+        <div class="rules"><span class="small-label">HOW TO PLAY</span><p>Connect <strong>at least 5 marks</strong> horizontally, vertically, or diagonally.</p><p>Blocked ends do not affect a win.</p><div class="rule-line"><span>9 × 9 board</span><span>X plays first</span></div></div>
+      </aside>
+      <section class="panel game-panel" aria-label="Caro board">
+        <div class="board-toolbar"><div><span class="small-label">CURRENT GAME</span><h2 id="game-title">Two players</h2></div><span class="board-tag">9 × 9</span></div>
+        <div class="players"><div id="player-x" class="player active"><span class="piece x">×</span><div><strong>Player X</strong><span id="x-caption">Plays first</span></div><span class="turn-dot"></span></div><span class="versus">VS</span><div id="player-o" class="player"><span class="piece o">○</span><div><strong>Player O</strong><span id="o-caption">Plays second</span></div><span class="turn-dot"></span></div></div>
+        <div class="board-frame"><div class="column-labels" aria-hidden="true"></div><div class="board-row"><div class="row-labels" aria-hidden="true"></div><div id="board" class="board" role="group" aria-label="Board with 9 rows and 9 columns"></div></div></div>
+        <div class="game-footer"><p id="status" role="status" aria-live="polite">X’s turn. Select an empty cell to begin.</p><span id="move-count">00 / 81</span></div>
+        <div class="game-actions"><button id="undo" class="button secondary" disabled>↶ Undo</button><button id="pause" class="button secondary" hidden>Pause</button><button id="restart" class="button secondary">↻ Restart</button></div>
+      </section>
+      <aside class="panel activity-panel">
+        <div class="panel-heading"><span class="section-number">02</span><h2>Game activity</h2></div>
+        <div class="stats"><div><span>Moves</span><strong id="stat-moves">0</strong></div><div><span>Time elapsed</span><strong id="elapsed">00:00</strong></div></div>
+        <div class="ai-metrics"><span class="small-label">LATEST AI MOVE</span><dl><div><dt>Thinking time</dt><dd id="metric-time">—</dd></div><div><dt>Search depth</dt><dd id="metric-depth">—</dd></div><div><dt>Nodes visited</dt><dd id="metric-nodes">—</dd></div></dl></div>
+        <div class="history-heading"><h3>Move history</h3><button id="export" class="text-button" disabled>Save JSON ↓</button></div>
+        <div id="empty-history" class="empty-history"><span aria-hidden="true">✕ ○</span><p>Your first move awaits.</p><small>Moves will appear here.</small></div>
+        <ol id="history" class="history" aria-label="Move history"></ol>
+      </aside>
+    </div>
+  </main>
+  <dialog id="reset-dialog"><form method="dialog"><span class="eyebrow">GAME IN PROGRESS</span><h2>Start over?</h2><p>All moves in the current game will be cleared.</p><div class="dialog-actions"><button class="button secondary" value="cancel">Keep playing</button><button class="button primary" value="confirm">Start over</button></div></form></dialog>
+</body>
+</html>
