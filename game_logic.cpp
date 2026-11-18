@@ -86,9 +86,6 @@ GameResult getGameResult(const Board& board, int lastRow, int lastCol) {
     return GameResult::ONGOING;
 }
 
-// ============================================================
-// HỖ TRỢ CHO NHÓM AI
-// ============================================================
 
 std::vector<Move> getCandidateMoves(const Board& board, int radius) {
     // Nếu bàn trống → trả về tâm bàn

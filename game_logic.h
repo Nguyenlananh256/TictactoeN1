@@ -90,9 +90,6 @@ bool isDraw(const Board& board);
 // Trả về kết quả hiện tại của ván sau nước đi (lastRow, lastCol)
 GameResult getGameResult(const Board& board, int lastRow, int lastCol);
 
-// ============================================================
-// HỖ TRỢ CHO NHÓM AI (đặt tại đây để tiện dùng chung)
-// ============================================================
 
 // Lấy danh sách các ô trống nằm trong bán kính `radius` ô
 // xung quanh các quân đã đặt. Nếu bàn trống, trả về tâm (4,4).
