@@ -1,0 +1,7 @@
+# Local C++ / Qt build output
+desktop/build*/
+desktop/.qt/
+desktop/.qtc_clangd/
+*.user
+*.user.*
+desktop/CMakeUserPresets.json
