@@ -13,7 +13,18 @@ if(CARO_BUILD_GUI)
     find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Concurrent)
     find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Concurrent)
     set(CMAKE_AUTORCC ON)
-    add_executable(CaroArena WIN32 src/main.cpp src/window.cpp src/window.h src/board_widget.cpp src/board_widget.h src/game.h src/ai.h assets/fonts.qrc)
+    add_executable(CaroArena WIN32
+    src/main.cpp
+    src/minimax.cpp
+    src/minimax.h
+    src/window.cpp
+    src/window.h
+    src/board_widget.cpp
+    src/board_widget.h
+    src/game.h
+    src/ai.h
+    assets/fonts.qrc
+)
     target_link_libraries(CaroArena PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Concurrent)
     set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT CaroArena)
     if(WIN32)

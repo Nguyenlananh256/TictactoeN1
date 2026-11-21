@@ -1,3 +1,4 @@
+#include "minimax.h"
 #include "window.h"
 #include <QApplication>
 #include <QTimer>
@@ -11,8 +12,12 @@ int main(int argc, char *argv[]) {
     app.setStyle("Fusion");
     QFontDatabase::addApplicationFont(":/fonts/PatrickHand-Regular.ttf");
     CaroWindow window;
-    // Register the team's algorithms here. See README.md for the C++ contract.
-    window.show();
+
+    window.registerAI("minimax", [](const caro::AiRequest &request) {
+    return caro::chooseMiniMaxMove(request);
+});
+
+window.show();
     // Developer-only rendering hook for visual verification without UI automation.
     const auto arguments = app.arguments();
     const int preview = arguments.indexOf("--render-preview");
