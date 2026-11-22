@@ -1,3 +1,4 @@
+#include "minimax.h"
 #include "window.h"
 #include <QApplication>
 #include <QTimer>
@@ -13,6 +14,11 @@ int main(int argc, char *argv[]) {
     app.setStyle("Fusion");
     QFontDatabase::addApplicationFont(":/fonts/PatrickHand-Regular.ttf");
     CaroWindow window;
+
+    window.registerAI("minimax", [](const caro::AiRequest &request) {
+    return caro::chooseMiniMaxMove(request);
+});
+
     // Register the team's algorithms here. See README.md for the C++ contract.
     window.registerAI("mcts", chooseMcts);
     window.registerAI("random", chooseRandom);
