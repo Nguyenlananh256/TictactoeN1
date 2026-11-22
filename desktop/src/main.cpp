@@ -4,6 +4,8 @@
 #include <QTimer>
 #include <QPixmap>
 #include <QFontDatabase>
+#include "mcts.h"
+#include "random.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
@@ -17,7 +19,11 @@ int main(int argc, char *argv[]) {
     return caro::chooseMiniMaxMove(request);
 });
 
-window.show();
+    // Register the team's algorithms here. See README.md for the C++ contract.
+    window.registerAI("mcts", chooseMcts);
+    window.registerAI("random", chooseRandom);
+
+    window.show();
     // Developer-only rendering hook for visual verification without UI automation.
     const auto arguments = app.arguments();
     const int preview = arguments.indexOf("--render-preview");
